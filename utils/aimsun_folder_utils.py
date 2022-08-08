@@ -60,16 +60,6 @@ __MICROSIMULATION_OUTPUTS_PATH = path.join(__AIMSUN_OUTPUTS_PATH,
                                            'microsimulations')
 
 
-Path(__AIMSUN_INPUT_DEMAND_DATA_PATH).mkdir(parents=True, exist_ok=True)
-Path(__AIMSUN_INPUT_NETWORK_DATA_PATH).mkdir(parents=True, exist_ok=True)
-Path(__AIMSUN_INPUT_CENTROID_CONNECTIONS_DATA_PATH).mkdir(
-    parents=True, exist_ok=True)
-Path(__AIMSUN_INPUT_TRAFFIC_MANAGEMENT_PATH).mkdir(parents=True, exist_ok=True)
-Path(__AIMSUN_INPUT_SPEED_CAPACITY_DATA_PATH).mkdir(parents=True, exist_ok=True)
-Path(__AIMSUN_INPUT_MASTER_CONTROL_PLAN_DATA_PATH).mkdir(
-    parents=True, exist_ok=True)
-
-
 def __filepath_with_epoch_directory(
     folder_path: str, epoch_name: str, filename: str
 ) -> str:

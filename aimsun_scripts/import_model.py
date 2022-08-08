@@ -1,7 +1,9 @@
 """Imports data into Aimsun."""
 
 import datetime
+from typing import Any, NewType
 
+import aimsun_config_utils
 import aimsun_folder_utils
 import aimsun_input_utils
 import aimsun_utils_functions
@@ -31,6 +33,16 @@ GK_OBJECT_STATUS_MODIFIED = GKObject.eModified
 def create_gk_point(lon: float, lat: float):
     """Return Aimsun GKPoint at given longitude and latitude."""
     return GKPoint(lon, lat)
+
+
+def create_schedule_demand_item():
+    """Return empty Aimsun GKScheduleDemandItem object."""
+    return GKScheduleDemandItem()
+
+
+def create_gk_time_duration(time_duration_in_seconds: int):
+    """Return Aimsun GKTimeDuration with given time duration."""
+    return GKTimeDuration(time_duration_in_seconds)
 
 
 def get_duration(
@@ -94,7 +106,7 @@ od_demand_matrix = aimsun_input_utils.OriginDestinationMatrices(
     od_demand_matrix_filepath)
 print('Creating the OD demand matrices in Aimsun...')
 aimsun_utils_functions.create_od_matrices(
-    od_demand, AIMSUN_MODEL, AIMSUN_SYSTEM, get_duration, get_from_time)
+    od_demand_matrix, AIMSUN_MODEL, AIMSUN_SYSTEM, get_duration, get_from_time)
 print('Done')
 # Load traffic demands
 traffic_demands_filepath = aimsun_folder_utils.traffic_demand_aimsun_input_file()
@@ -103,7 +115,7 @@ traffic_demands = aimsun_config_utils.AimsunTrafficDemands(
     traffic_demands_filepath)
 print('Creating the traffic demands in Aimsun...')
 aimsun_utils_functions.create_traffic_demand(
-    traffic_demands, model, GKSystem.getSystem(), create_schedule_demand_item,
+    traffic_demands, model, GKSystem.getSystem(), aimsun_utils_functions.create_schedule_demand_item,
     create_gk_time_duration)
 print('Done')
 
