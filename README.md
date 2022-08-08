@@ -37,4 +37,9 @@ Then, with the config ready, the user should execute the Aimsun simulation scrip
 
 After the simulation is run and output databases are available, the user can further proceed with `calibration/microsimulation_config_and_analysis.ipynb` to assess the accuracy of the simulation according to validation data and calibrate the simulation.
 
+## Dependencies
+
+Python dependencies are listed in requirements.txt.
+Please run `pip3 install -r requirements.txt` to install all packages.
+
 **Last updated: August 7th, 2022 for Aimsun v22.0.1**
