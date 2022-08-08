@@ -3,16 +3,16 @@
 import datetime
 from typing import List
 
-# Set path to data folder.
+# Set path to data folder. Default set for fremont example.
 __DATA_FOLDER_PATH = '../fremont-public-data'
 
-# Set name of simulation epoch.
+# Set name of simulation epoch. Default set for fremont example.
 __SIMULATION_EPOCH = 'fremont_example'
 
-# Set year of simulation.
+# Set year of simulation. Default set for fremont example.
 __YEAR_OF_SIMULATION = 2019
 
-# Set details for time steps used in simulation.
+# Set details for time steps used in simulation. Default set for fremont example.
 __START_HOUR = 14
 __END_HOUR = 20
 __TIMESTEP_MINUTES = 15

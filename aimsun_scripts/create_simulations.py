@@ -9,8 +9,8 @@ import aimsun_config_utils
 from aimsun_folder_utils import (
     aimsun_macro_simulation_config_input_file,
     aimsun_micro_simulation_config_input_file,
-    aimsun_output_directory_path,
-    aimsun_sensitivity_analysis_unique_simulation_names_file)
+    aimsun_output_directory_path
+)
 from aimsun_utils_functions import (
     create_macroscenarios,
     create_gk_scenario_and_experiment

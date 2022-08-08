@@ -2497,9 +2497,6 @@ def create_gk_scenario_and_experiment(  # pylint:disable=too-many-locals,too-man
         microscenario.traffic_demand_external_id,
         ["GKTrafficDemand"], aimsun_model)
 
-    real_dataset = get_and_restore_real_dataset(
-        microscenario.real_dataset_external_id, aimsun_model)
-
     def get_strategy(strategy_id: aimsun_input_utils.ExternalId) -> GKStrategy:
         return get_object_per_external_id(
             strategy_id, ['GKStrategy'], aimsun_model)
@@ -2524,9 +2521,6 @@ def create_gk_scenario_and_experiment(  # pylint:disable=too-many-locals,too-man
     begin_date = microscenario.begin_date
     gk_scenario.setDate(create_q_date(begin_date.year, begin_date.month,
                                       begin_date.day))
-
-    if real_dataset is not None:
-        gk_scenario.setRealDataSet(real_dataset)
 
     db_info = update_database_info(
         gk_scenario.getDB(True), microscenario.database_info, aimsun_model,

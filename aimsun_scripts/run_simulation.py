@@ -7,8 +7,8 @@ import aimsun_config_utils
 import aimsun_input_utils
 from aimsun_folder_utils import (
     aimsun_macro_simulation_config_input_file,
-    aimsun_micro_simulation_config_input_file,
-    aimsun_sensitivity_analysis_unique_simulation_names_file)
+    aimsun_micro_simulation_config_input_file
+)
 
 
 RUN_MACRO_BASELINE = False
