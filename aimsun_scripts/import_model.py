@@ -115,7 +115,7 @@ traffic_demands = aimsun_config_utils.AimsunTrafficDemands(
     traffic_demands_filepath)
 print('Creating the traffic demands in Aimsun...')
 aimsun_utils_functions.create_traffic_demand(
-    traffic_demands, model, GKSystem.getSystem(), aimsun_utils_functions.create_schedule_demand_item,
+    traffic_demands, model, GKSystem.getSystem(), create_schedule_demand_item,
     create_gk_time_duration)
 print('Done')
 
@@ -130,17 +130,6 @@ speed_and_capacity_data = aimsun_input_utils.SectionSpeedLimitsAndCapacities(
 print('Creating the speed limits and capacities in Aimsun...')
 aimsun_utils_functions.update_speed_and_capacity(
     speed_and_capacity_data, AIMSUN_MODEL)
-print('Done')
-# Load master control plan and control plans
-master_control_plan_filepath = aimsun_folder_utils.master_control_plan_aimsun_input_file()
-print(f'Loading master control plan from {master_control_plan_filepath}...')
-master_control_plan = aimsun_input_utils.MasterControlPlan(
-    master_control_plan_filepath)
-print('Creating the master control plan in Aimsun...')
-aimsun_utils_functions.import_master_control_plan(
-    master_control_plan, AIMSUN_MODEL, AIMSUN_SYSTEM,
-    GK_OBJECT_STATUS_MODIFIED, create_master_control_plan_item,
-    MAPPING_CONTROL_METERING_TYPE)
 print('Done')
 # Load traffic management strategies
 traffic_management_filepath = aimsun_folder_utils.traffic_management_aimsun_input_file()
