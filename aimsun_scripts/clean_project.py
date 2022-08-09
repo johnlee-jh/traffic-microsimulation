@@ -19,9 +19,7 @@ for GKtypeRemove in [
         "GKScenario",
         "GKStrategy",
         "GKTrafficDemand",
-        "GKTurningClosingChange",
-        "MacroExperiment",
-        "MacroScenario"
+        "GKTurningClosingChange"
 ]:
     oftype = model.getCatalog().getObjectsByType(model.getType(GKtypeRemove))
     if oftype is not None:

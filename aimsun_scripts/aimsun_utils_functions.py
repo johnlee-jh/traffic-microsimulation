@@ -1954,7 +1954,7 @@ def update_database_info(
             attributes updated with the Python object's attributes.
         database_info: A Python AimsunDataBaseInfo object that has the data
             needed to update db_info.
-        path_to_database_directory: TODO.
+        path_to_database_directory: Filepath to the simulation output database.
     Returns:
         db_info: The Aimsun GKDataBaseInfo object with updated attributes from
             the Python AimsunDataBaseInfo object.

@@ -9,9 +9,14 @@ import sqlite3
 import sys
 from typing import Any, Dict
 
-sys.path.append(os.path.abspath(os.path.join('..', 'Utils')))
+sys.path.append(os.path.abspath(os.path.join('..', 'utils')))
 
 import aimsun_input_utils
+
+
+ALL_VEHICLE_TYPES = 0
+ALL_TIME_AGGREGATED = 0
+
 
 
 class SimInfoColumns(enum.Enum):
@@ -26,10 +31,7 @@ class SimInfoColumns(enum.Enum):
     START_TIME_INTERVAL = "from_time"
     TOTAL_DURATION = "duration"
     NUM_TIME_INTERVALS = "totalstatintervals"
-
-
-ALL_VEHICLE_TYPES = 0
-ALL_TIME_AGGREGATED = 0
+    # Add more columns as needed.
 
 
 class MaSectColumns(enum.Enum):
@@ -66,6 +68,7 @@ class MaSectColumns(enum.Enum):
     FLOW = "flow"
     OCCUPANCY = "occupancy"
     COST = "cost"
+    # Add more columns as needed.
 
 
 class MaDetColumns(enum.Enum):
@@ -95,6 +98,7 @@ class MaDetColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     VOLUME = "volume"
     FLOW = "flow"
+    # Add more columns as needed.
 
 
 class MiSysColumns(enum.Enum):
@@ -116,6 +120,7 @@ class MiSysColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     FLOW = "flow"
     DELAY_TIME = "dtime"
+    # Add more columns as needed.
 
 
 class MiSectColumns(enum.Enum):
@@ -142,6 +147,7 @@ class MiSectColumns(enum.Enum):
     VEHICLE_TYPE = "sid"
     TIME_INTERVAL = "ent"
     MEAN_SPEED = "speed"
+    # Add more columns as needed.
 
 
 class MiDetColumns(enum.Enum):
@@ -170,6 +176,7 @@ class MiDetColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     COUNT = "countveh"
     FLOW = "flow"
+    # Add more columns as needed.
 
 
 class TotalRgapColumns(enum.Enum):
@@ -193,6 +200,7 @@ class TotalRgapColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     RGAP_INSTANT = "rgapinstantaneous"
     RGAP_EXPERIENCED = "rgapexperienced"
+    # Add more columns as needed.
 
 
 class MicentOriginColumns(enum.Enum):
@@ -222,6 +230,7 @@ class MicentOriginColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     TRAVEL_TIME = "ttime"
     DISTANCE = "travel"
+    # Add more columns as needed.
 
 
 class MicentDestinationColumns(enum.Enum):
@@ -251,6 +260,7 @@ class MicentDestinationColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     TRAVEL_TIME = "ttime"
     DISTANCE = "travel"
+    # Add more columns as needed.
 
 
 class SQLiteTable:
@@ -418,9 +428,6 @@ class AimsunMicroOutputDatabase(AimsunOutputDatabase):
         self.sections_table = SQLiteTable(self.database, "MISECT")
         self.detectors_table = SQLiteTable(self.database, "MIDETEC")
         self.total_rgap_table = SQLiteTable(self.database, "RGap")
-        self.origin_centroids_table = SQLiteTable(self.database, "MICENT_O")
-        self.section_trajectories_table = SQLiteTable(
-            self.database, "MIVEHSECTTRAJECTORY")
         # Add more tables here if needed.
 
     def convert_time_to_int(self, time_interval: datetime.time) -> int:
@@ -544,91 +551,40 @@ class AimsunMicroOutputDatabase(AimsunOutputDatabase):
             {MiDetColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
              MiDetColumns.TIME_INTERVAL.value: str(time_interval_int)})
 
-    def get_total_rgap(
+    def get_total_instantaneous_rgap(
         self, time_interval: datetime.time
-    ) -> tuple(float, float):
-        """Get experienced and instaneous relative gaps for the entire network
-        at the given time interval.
+    ) -> float:
+        """Get instantaneous relative gap for the entire network at the given
+        time interval.
 
         Args:
             time_interval: Time interval of when we want the Rgap from.
         Returns:
-            rgaps: Instantaneous and experienced relative gaps for the entire
-                network, in respective order.
+            rgap_instant: Instantaneous relative gap for the entire network.
         """
-        start_time_seconds = self.sim_info.get_data_on_condition(
-            SimInfoColumns.START_TIME_INTERVAL.value)
-        num_time_intervals = self.total_rgap_table.get_number_of_entries() - 1
-        total_duration = self.sim_info.get_data_on_condition(
-            SimInfoColumns.TOTAL_DURATION.value)
-        time_step = total_duration // num_time_intervals
-        time_index = (time_interval.hour * 3600 + time_interval.minute * 60
-                      - start_time_seconds) // time_step + 1
-        assert isinstance(time_index, int) and time_index >= 1
+        time_interval_int = self.convert_time_to_int(time_interval)
         rgap_instant = self.total_rgap_table.get_data_on_condition(
             TotalRgapColumns.RGAP_INSTANT.value,
             {TotalRgapColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
-             TotalRgapColumns.TIME_INTERVAL.value: str(time_index)})
+             TotalRgapColumns.TIME_INTERVAL.value: str(time_interval_int)})
+        return rgap_instant
+
+    def get_total_experienced_rgap(
+        self, time_interval: datetime.time
+    ) -> float:
+        """Get experienced relative gap for the entire network at the given
+        time interval.
+
+        Args:
+            time_interval: Time interval of when we want the Rgap from.
+        Returns:
+            rgap_experience: Experienced relative gap for the entire network.
+        """
+        time_interval_int = self.convert_time_to_int(time_interval)
         rgap_experience = self.total_rgap_table.get_data_on_condition(
             TotalRgapColumns.RGAP_EXPERIENCED.value,
             {TotalRgapColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
-             TotalRgapColumns.TIME_INTERVAL.value: str(time_index)})
-        return (rgap_instant, rgap_experience)
-
-    def get_centroid_ext_int_ids(self
-    ) -> list(tuple(aimsun_input_utils.ExternalId,
-                    aimsun_input_utils.InternalId)):
-        """Get the internal IDs of all external centroids in the network.
-
-        Returns:
-            external_to_internal_id: External and Internal IDs of all centroids.
-                Contains duplicates.
-        """
-        return self.origin_centroids_table.get_internal_external_ids(
-            MicentOriginColumns.ORIGIN_CENTROID_INTERNAL_ID.value,
-            MicentOriginColumns.ORIGIN_CENTROID_EXTERNAL_ID.value)
-
-    def get_od_travel_time(
-        self, origin_centroid_external_id: aimsun_input_utils.ExternalId,
-        destination_centroid_external_id: aimsun_input_utils.InternalId,
-        time_interval: datetime.time
-    ):
-        """TODO: Docstring"""
-        time_interval_int = self.convert_time_to_int(time_interval)
-        return self.origin_centroids_table.get_data_on_condition(
-            MicentOriginColumns.TRAVEL_TIME.value,
-            {MicentOriginColumns.ORIGIN_CENTROID_EXTERNAL_ID.value:
-                origin_centroid_external_id,
-             MicentOriginColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
-             MicentOriginColumns.DEST_CENTROID_INTERNAL_ID.value:
-                destination_centroid_external_id,
-             MicentOriginColumns.TIME_INTERVAL.value: str(time_interval_int)})
-
-    def get_od_demand(
-        self, origin_centroid_external_id: aimsun_input_utils.ExternalId,
-        destination_centroid_external_id: aimsun_input_utils.ExternalId,
-        time_interval: datetime.time
-    ):
-        """TODO: Docstring"""
-        time_interval_int = self.convert_time_to_int(time_interval)
-        summed_distance = self.origin_centroids_table.get_data_on_condition(
-            MicentOriginColumns.DISTANCE.value,
-            {MicentOriginColumns.ORIGIN_CENTROID_EXTERNAL_ID.value:
-                origin_centroid_external_id,
-             MicentOriginColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
-             MicentOriginColumns.DEST_CENTROID_INTERNAL_ID.value:
-                destination_centroid_external_id,
-             MicentOriginColumns.TIME_INTERVAL.value: str(time_interval_int)})
-        num_vehicles = self.origin_centroids_table.get_data_on_condition(
-            MicentOriginColumns.NUM_VEHICLES.value,
-            {MicentOriginColumns.ORIGIN_CENTROID_EXTERNAL_ID.value:
-                origin_centroid_external_id,
-             MicentOriginColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
-             MicentOriginColumns.DEST_CENTROID_INTERNAL_ID.value:
-                destination_centroid_external_id,
-             MicentOriginColumns.TIME_INTERVAL.value: str(time_interval_int)})
-        if num_vehicles < 1.0:  # Remove entries where there are no vehicles
-            return -1
-        return summed_distance / num_vehicles
+             TotalRgapColumns.TIME_INTERVAL.value: str(time_interval_int)})
+        return rgap_experience
 
     # Define more methods as needed.

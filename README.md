@@ -12,9 +12,9 @@ This repository contains three folders and one submodule.
 The three folders contain files used to create, calibrate, and validate the Aimsun traffic microsimulation. 
 A high-level overview of the strucutre is as below.
 
-- `aimsun_scripts/`: Contains files that interact directly with Aimsun to create and execute the simulation.
-- `calibration/`: Contains files that calibrate and/or analyze simulations after it has been run.
-- `utils/`: Contains files that standardize dataclasses and filepaths throughout the repository.
+- `aimsun_scripts`: Contains files that interact directly with Aimsun to create and execute the simulation.
+- `calibration`: Contains files that calibrate and/or analyze simulations after it has been run.
+- `utils`: Contains files that standardize dataclasses and filepaths throughout the repository.
 
 The submodule contains example data for the city of Fremont to help users understand the structure and outputs of this repository as well as the traffic simulation.
 - `fremont-public-data`: Contains files that contain processed data from public sources for the city of Fremont.
