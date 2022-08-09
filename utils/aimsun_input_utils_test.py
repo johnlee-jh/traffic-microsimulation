@@ -12,7 +12,6 @@ The tests themselves also have their own labeling system. Anything labeled as
 Anything labeled as 'test_fail_[name]' tests the failure cases of an object,
 such as incorrect data type or incorrect filepath information.
 """
-# pylint: disable=too-many-lines
 
 from __future__ import annotations
 
@@ -1100,7 +1099,7 @@ def _create_random_flow_dataset(
     return output_flow_dataset
 
 
-def _create_static_flow_dataset(  # pylint: disable=too-many-arguments
+def _create_static_flow_dataset(
     datasize: int, detector_ext_id: str, detector_int_id: str,
     dataset_ext_id: str, filename: str, skip_line: int
 ) -> aimsun_input_utils.AimsunFlowRealDataSet:

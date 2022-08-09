@@ -7,8 +7,8 @@ import os
 import sys
 from typing import Any, Dict, List, Iterable, Union
 
-import numpy as np  # pylint:disable=import-error
-from sklearn.linear_model import LinearRegression  # pylint:disable=import-error
+import numpy as np
+from sklearn.linear_model import LinearRegression
 
 from postprocessing_util import (
     AimsunMacroOutputDatabase,

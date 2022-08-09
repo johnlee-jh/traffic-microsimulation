@@ -89,7 +89,6 @@ Classes:
     TrafficPolicy: Data class corresponding to Aimsun GKPolicy.
     TrafficManagementStrategy: Data class corresponding to Aimsun GKStrategy.
 """
-# pylint: disable=too-many-lines
 
 from __future__ import annotations
 
@@ -275,7 +274,7 @@ def od_matrix_name_generation(
     return f"{vehicle_type}_{time.strftime('%H_%M')}"
 
 
-class AimsunObject:  # pylint:disable=too-few-public-methods
+class AimsunObject:
     """The main class that is called whenever an Aimsun object is created. It
     stores a name, Internal ID, and External ID to distinguish every object
     created from other objects. Internal IDs are unique, while External IDs are
@@ -378,7 +377,7 @@ class CentroidConfiguration(AimsunObject):
         else:
             self.external_id = external_id
 
-    def export_to_file(self, filepath: str):  # pylint:disable=too-many-branches
+    def export_to_file(self, filepath: str):
         """Function to export CentroidConfiguration object using pickle.
 
         Each if not/raise block is used to ensure the file we export using this
@@ -488,7 +487,7 @@ class CentroidConfiguration(AimsunObject):
         return string
 
 
-class OriginDestinationTripsCount:  # pylint:disable=too-few-public-methods
+class OriginDestinationTripsCount:
     """Data class to contain matrices that detail the Origin/Destination
     Centroid ID pairs and the number of trips within a certain time interval,
     which is defined in the OriginDestinationMatrix class as begin_time_interval
@@ -505,7 +504,7 @@ class OriginDestinationTripsCount:  # pylint:disable=too-few-public-methods
     origin_centroid_external_id: ExternalId
 
 
-class OriginDestinationMatrix(AimsunObject):  # pylint:disable=too-few-public-methods
+class OriginDestinationMatrix(AimsunObject):
     """Data class to relate time intervals, locations, and demand together in
     one object. This models origin and destination centroids as well as time
     frames between them and the number of trips that were measured. This OD pair
@@ -664,7 +663,7 @@ class OriginDestinationMatrices:
         return string
 
 
-class SectionSpeedLimitAndCapacity:  # pylint:disable=too-few-public-methods
+class SectionSpeedLimitAndCapacity:
     """A SectionSpeedLimitAndCapacity object corresponds to a Section, which is
     a part of a road upon which vehicles can travel. It is also given data for
     speed limit and vehicle capacity to better model actual road conditions.
@@ -797,13 +796,13 @@ class SectionSpeedLimitsAndCapacities:
 # ************************************************************
 
 
-class AimsunGeoObject(AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunGeoObject(AimsunObject):
     """Data class for Aimsun geometry object. Corresponds to Aimsun GKGeoObject.
     """
     layer_id: InternalId
 
 
-class AimsunSectionObject(AimsunGeoObject):  # pylint:disable=too-few-public-methods
+class AimsunSectionObject(AimsunGeoObject):
     """This type of object will always be added on top of a Section. It is a
     parent class that holds functionality for other section objects, such as
     Detectors or Meterings.
@@ -842,7 +841,7 @@ class AimsunSectionObject(AimsunGeoObject):  # pylint:disable=too-few-public-met
             string += f"Position: {self.position}\n"
         return string
 
-    def check_attributes_type(self):  # pylint:disable=too-many-return-statements
+    def check_attributes_type(self):
         """Check that attributes have correct object type."""
         if not super().check_attributes_type():
             return False
@@ -864,7 +863,7 @@ class AimsunSectionObject(AimsunGeoObject):  # pylint:disable=too-few-public-met
         return True
 
 
-class Detector(AimsunSectionObject):  # pylint:disable=too-few-public-methods
+class Detector(AimsunSectionObject):
     """Detectors lie along sections and record vehicle information, such as
     flow, occupancy, etc. These are used to capture data that will be used to
     build and calibrate demand matrices. This class inherits attributes from
@@ -938,7 +937,7 @@ class Detector(AimsunSectionObject):  # pylint:disable=too-few-public-methods
             string += f"Position from end: {self.position_from_end}\n"
         return string
 
-    def check_attributes_type(self):  # pylint:disable=too-many-return-statements,too-many-branches
+    def check_attributes_type(self):
         """Check that attributes have correct object type."""
         if not super().check_attributes_type():
             return False
@@ -978,7 +977,7 @@ class Detector(AimsunSectionObject):  # pylint:disable=too-few-public-methods
         return True
 
 
-class Metering(AimsunSectionObject):  # pylint:disable=too-few-public-methods
+class Metering(AimsunSectionObject):
     """Metering class assigns type and maximum vehicle flow into one object.
 
     This class corresponds to the GKMetering object in Aimsun.
@@ -1022,7 +1021,7 @@ class Detectors:
         else:
             self.detector_list = []
 
-    def export_to_file(self, filepath: str):  # pylint:disable=too-many-branches, too-many-statements
+    def export_to_file(self, filepath: str):
         """Function to export Detectors object using pickle.
 
         Each if not/raise block is used to ensure the file we export using this
@@ -1085,7 +1084,7 @@ class Detectors:
         return string
 
 
-class FlowRealData(Detector):  # pylint: disable=too-few-public-methods
+class FlowRealData(Detector):
     """Data class for output flow data from one detector.
 
     Attributes:
@@ -1240,7 +1239,7 @@ class AimsunFlowRealDataSet(AimsunObject):
         return True
 
 
-class ControlDetector:  # pylint:disable=too-few-public-methods
+class ControlDetector:
     """Data class that corresponds to Aimsun GKControlDetector object. Used for
     NE3 and N5 Aimsun scripts.
 
@@ -1282,7 +1281,7 @@ class ControlDetector:  # pylint:disable=too-few-public-methods
         return True
 
 
-class ControlMetering:  # pylint:disable=too-few-public-methods
+class ControlMetering:
     """Data class that corresponds to Aimsun GKControlMetering object.
 
     Attributes:
@@ -1305,7 +1304,7 @@ class ControlMetering:  # pylint:disable=too-few-public-methods
         return True
 
 
-class ControlPhaseSignal:  # pylint:disable=too-few-public-methods
+class ControlPhaseSignal:
     """Data class that corresponds to Aimsun GKControlPhaseSignal object.
 
     Attributes:
@@ -1344,7 +1343,7 @@ class ControlPhaseSignal:  # pylint:disable=too-few-public-methods
         return return_string
 
 
-class ControlPhase:  # pylint:disable=too-few-public-methods
+class ControlPhase:
     """Data class that corresponds to Aimsun GKControlPhase object. Used for NE3
     and N5 Aimsun scripts.
 
@@ -1392,7 +1391,7 @@ class ControlPhase:  # pylint:disable=too-few-public-methods
         return return_string
 
 
-class NonActuatedControlPhase(ControlPhase):  # pylint:disable=too-few-public-methods
+class NonActuatedControlPhase(ControlPhase):
     """Child class that contains attributes specific to a non-actuated Aimsun
     GKControlPhase object. Used for NE3 and N5 Aimsun scripts.
 
@@ -1421,7 +1420,7 @@ class NonActuatedControlPhase(ControlPhase):  # pylint:disable=too-few-public-me
         return return_string
 
 
-class ActuatedControlPhase(ControlPhase):  # pylint:disable=too-few-public-methods
+class ActuatedControlPhase(ControlPhase):
     """Child class that contains attributes specific to an actuated Aimsun
     GKControlPhase object. Used for NE3 and N5 Aimsun scripts.
 
@@ -1469,7 +1468,7 @@ class ActuatedControlPhase(ControlPhase):  # pylint:disable=too-few-public-metho
         super().__init__()
         self.detectors = []
 
-    def check_attributes_type(self):  # pylint:disable=too-many-return-statements,too-many-branches,too-many-statements
+    def check_attributes_type(self):
         """Check that attributes have correct object type."""
         if not super().check_attributes_type():
             return False
@@ -1553,7 +1552,7 @@ class ActuatedControlPhase(ControlPhase):  # pylint:disable=too-few-public-metho
         return True
 
 
-class ControlJunction:  # pylint:disable=too-few-public-methods
+class ControlJunction:
     """Data class that corresponds to Aimsun GKControlJunction object. Used for
     NE3 and N5 Aimsun scripts.
 
@@ -1589,7 +1588,7 @@ class ControlJunction:  # pylint:disable=too-few-public-methods
         return True
 
 
-class NonActuatedControlJunction(ControlJunction):  # pylint:disable=too-few-public-methods
+class NonActuatedControlJunction(ControlJunction):
     """This child class of ControlJunction houses the attributes of a
     non-actuated control junction.
     """
@@ -1613,7 +1612,7 @@ class NonActuatedControlJunction(ControlJunction):  # pylint:disable=too-few-pub
         return True
 
 
-class ActuatedControlJunction(ControlJunction):  # pylint:disable=too-few-public-methods
+class ActuatedControlJunction(ControlJunction):
     """This child class of ControlJunction houses the many more attributes of
     an actuated control junction has over a non-actuated junction. It also uses
     ActuatedControlPhases, a child of ControlPhases.
@@ -1626,7 +1625,7 @@ class ActuatedControlJunction(ControlJunction):  # pylint:disable=too-few-public
     single_entry: bool
     phases: list[ActuatedControlPhase]
 
-    def check_attributes_type(self):  # pylint:disable=too-many-return-statements,too-many-branches
+    def check_attributes_type(self):
         """Check that attributes have correct object type."""
         if not super().check_attributes_type():
             return False
@@ -1671,7 +1670,7 @@ class ActuatedControlJunction(ControlJunction):  # pylint:disable=too-few-public
         return True
 
 
-class ControlPlan(AimsunObject):  # pylint:disable=too-few-public-methods
+class ControlPlan(AimsunObject):
     """Data class that corresponds to Aimsun GKControlPlan object.
 
     Attributes:
@@ -1710,7 +1709,7 @@ class ControlPlan(AimsunObject):  # pylint:disable=too-few-public-methods
         return True
 
 
-class MasterControlPlanItem:  # pylint:disable=too-few-public-methods
+class MasterControlPlanItem:
     """Data class that corresponds to Aimsun GKScheduleMasterControlPlanItem
     object.
 
@@ -1758,7 +1757,7 @@ class MasterControlPlanItem:  # pylint:disable=too-few-public-methods
         return return_string[:-2] + "}"
 
 
-class MasterControlPlan(AimsunObject):  # pylint:disable=too-few-public-methods
+class MasterControlPlan(AimsunObject):
     """Data class that corresponds to Aimsun GKMasterControlPlan object. Used
     for NE3 and N5 Aimsun scripts.
 
@@ -1906,7 +1905,7 @@ class MasterControlPlan(AimsunObject):  # pylint:disable=too-few-public-methods
         return return_string
 
 
-class TurningClosingChange(AimsunObject):  # pylint:disable=too-few-public-methods
+class TurningClosingChange(AimsunObject):
     """Class describing the changes to a turning section. This is used in the
     traffic policies to show possible sets of changes that may reduce traffic.
 
@@ -1931,7 +1930,7 @@ class TurningClosingChange(AimsunObject):  # pylint:disable=too-few-public-metho
         return string
 
 
-class TrafficPolicy(AimsunObject):  # pylint:disable=too-few-public-methods
+class TrafficPolicy(AimsunObject):
     """Class describing the group of scenario changes (also known as
     TurningClosingChange objects) that are a part of a single traffic policy.
 
@@ -1951,7 +1950,7 @@ class TrafficPolicy(AimsunObject):  # pylint:disable=too-few-public-methods
         return string
 
 
-class TrafficManagementStrategy(AimsunObject):  # pylint:disable=too-few-public-methods
+class TrafficManagementStrategy(AimsunObject):
     """Class describing a traffic management strategy that may be employed
     to reduce traffic within the studied city.
 

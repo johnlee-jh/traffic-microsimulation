@@ -6,14 +6,14 @@ import sys
 import unittest
 from unittest import mock
 
-import numpy as np  # pylint: disable=import-error
+import numpy as np
 
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', 'Utils')))
 
-from aimsun_input_utils import FlowRealData, AimsunFlowRealDataSet  # pylint: disable=wrong-import-position, import-error
+from aimsun_input_utils import FlowRealData, AimsunFlowRealDataSet
 
-from postprocessing_plot_util import (  # pylint: disable=wrong-import-position
+from postprocessing_plot_util import (
     convert_flow_per_time_to_list,
     get_linear_regression,
     process_real_flow_data
@@ -53,7 +53,7 @@ class TestAllMethods(unittest.TestCase):
         self.assertTrue(
             all(real_flow_list == np.arange(count).reshape(-1, 1)))
         city_real_flow_list, city_simulated_flow_list, pems_real_flow_list, \
-            pems_simulated_flow_list = convert_flow_per_time_to_list(  # pylint: disable=unbalanced-tuple-unpacking
+            pems_simulated_flow_list = convert_flow_per_time_to_list(
                 real_flow_per_time, simulated_flow_per_time, TIME_LIST, '2019')
         self.assertTrue(all(city_real_flow_list == city_simulated_flow_list))
         self.assertTrue(all(pems_real_flow_list == pems_simulated_flow_list))
@@ -61,7 +61,7 @@ class TestAllMethods(unittest.TestCase):
         self.assertTrue(int(np.average(city_real_flow_list)
                         + np.average(pems_real_flow_list)) == count - 1)
 
-    def test_get_linear_regression(self):  # pylint: disable=too-many-locals
+    def test_get_linear_regression(self):
         """Verify correctness of the function get_linear_regression().
 
         This test case generates manually created X and Y data of scatterplots
@@ -141,18 +141,6 @@ class TestAllMethods(unittest.TestCase):
                         == AIMSUN_DETECTOR_EXTERNAL_ID_LIST)
         self.assertTrue(list(real_flow_per_detector.keys())
                         == AIMSUN_DETECTOR_EXTERNAL_ID_LIST)
-
-    def test_process_macro_simulated_flow_data(self):
-        """docstring"""
-        self.assertTrue(True)  # pylint: disable=W1503
-
-    def test_process_micro_simulated_flow_data(self):
-        """docstring"""
-        self.assertTrue(True)  # pylint: disable=W1503
-
-    def test_process_macro_simulated_flow_data(self):
-        """docstring"""
-        self.assertTrue(True)  # pylint: disable=W1503
 
 
 if __name__ == '__main__':

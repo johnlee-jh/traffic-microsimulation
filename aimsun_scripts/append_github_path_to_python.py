@@ -10,7 +10,7 @@ AIMSUN_FOLDER_PATH = os.path.join(__REPO_PATH, "aimsun_scripts")
 
 
 if not __REPO_PATH:
-    model.reportError(  # pylint: disable=undefined-variable
+    model.reportError(
         'append_github_path_to_python',
         "Please change __REPO_PATH to your local repository path.")
 

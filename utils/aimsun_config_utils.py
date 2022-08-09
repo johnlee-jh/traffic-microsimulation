@@ -22,7 +22,7 @@ import aimsun_input_utils
 from verification_utils import verify_filepath, verify_attributes
 
 
-class AimsunScheduleDemandItem(aimsun_input_utils.AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunScheduleDemandItem(aimsun_input_utils.AimsunObject):
     """The AimsunScheduleDemandItem class saves demand information to be
     imported and used by the Aimsun simulator. It saves some information in
     an OD Matrix object, which is referenced by External ID in this object.
@@ -48,7 +48,7 @@ class AimsunScheduleDemandItem(aimsun_input_utils.AimsunObject):  # pylint:disab
         self.demand_factor = demand_factor
 
 
-class AimsunTrafficDemand(aimsun_input_utils.AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunTrafficDemand(aimsun_input_utils.AimsunObject):
     """Aggregate class containing a list of AimsunScheduleDemandItem objects.
 
     The AimsunTrafficDemand class corresponds to the traffic demand of one
@@ -70,7 +70,7 @@ class AimsunTrafficDemand(aimsun_input_utils.AimsunObject):  # pylint:disable=to
         self.name = external_id
 
 
-class AimsunTrafficDemands:  # pylint:disable=too-few-public-methods
+class AimsunTrafficDemands:
     """Aggregate class containing a list of AimsunTrafficDemand objects.
 
     The AimsunTrafficDemand class stores a list of
@@ -156,7 +156,7 @@ class AimsunTrafficDemands:  # pylint:disable=too-few-public-methods
             self.traffic_demands = imported_traffic_demands
 
 
-class AimsunDataBaseInfo:  # pylint:disable=too-few-public-methods
+class AimsunDataBaseInfo:
     """The AimsunDataBaseInfo class connects data storage from an external
     database to Aimsun by a driver reference and database path. The database
     can also be set to automatic for Aimsun to manage it without asking the
@@ -192,7 +192,7 @@ class AimsunDataBaseInfo:  # pylint:disable=too-few-public-methods
     database_driver_name: str
     database_path: str
 
-    def __init__(  # pylint: disable=too-many-arguments
+    def __init__(
         self, database_path: str, use_project_db: bool = False,
         automatic: bool = False,
         database_driver_name: str = aimsun_input_utils.DATABASE_DRIVER_NAME,
@@ -205,7 +205,7 @@ class AimsunDataBaseInfo:  # pylint:disable=too-few-public-methods
         self.database_path = database_path
 
 
-class AimsunGenericExperiment(aimsun_input_utils.AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunGenericExperiment(aimsun_input_utils.AimsunObject):
     """The AimsunGenericExperiment class acts as a placeholder for Aimsun
     structure. It has no functionality within itself, but Aimsun's experiment
     classes inherit from this class. Thus, it is copied over to preserve
@@ -388,7 +388,7 @@ class TwoLaneCarFollowingModel(enum.IntEnum):
     ADJACENT_PATHS = 2
 
 
-class FrankWolfeParameters:  # pylint:disable=too-few-public-methods
+class FrankWolfeParameters:
     """The FrankWolfeParameters class is used to store parameters used in a
     Macroexperiment.
     Python object modeling the Aimsun CFrankWolfeParams.
@@ -414,7 +414,7 @@ class FrankWolfeParameters:  # pylint:disable=too-few-public-methods
         self.max_relative_gap = max_relative_gap
 
 
-class AimsunReplication(aimsun_input_utils.AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunReplication(aimsun_input_utils.AimsunObject):
     """A class used to save replication data from Aimsun's GKReplication
     objects.
 
@@ -432,7 +432,7 @@ class AimsunReplication(aimsun_input_utils.AimsunObject):  # pylint:disable=too-
         self.results_to_generate = results_to_generate
 
 
-class AimsunStaticMacroExperiment(AimsunGenericExperiment):  # pylint:disable=too-few-public-methods
+class AimsunStaticMacroExperiment(AimsunGenericExperiment):
     """The AimsunStaticMacroExperiment class stores the data needed to run a
     static macroexperiment. This data will be accessed later when instantiating
     a new experiment within Aimsun.
@@ -460,7 +460,7 @@ class AimsunStaticMacroExperiment(AimsunGenericExperiment):  # pylint:disable=to
             max_relative_gap=max_relative_gap)
 
 
-class AimsunMicroExperiment(AimsunGenericExperiment):  # pylint:disable=too-few-public-methods, too-many-instance-attributes
+class AimsunMicroExperiment(AimsunGenericExperiment):
     """This class holds all the needed parameters to run a dynamic
     microsimulation. The experiment can be a stochastic route choice (SRC) or a
     dynamic user-equilibrium (DUE) experiment.
@@ -713,7 +713,7 @@ class AimsunMicroExperiment(AimsunGenericExperiment):  # pylint:disable=too-few-
     # DUE Parameters
     due_experienced_costs: int
 
-    def __init__(self, capacity_weight=1.0, dynamic=True, max_assign_paths=1,  # pylint:disable=too-many-arguments
+    def __init__(self, capacity_weight=1.0, dynamic=True, max_assign_paths=1,
                  max_routes=5, probability=1.0, user_defined_cost_weigth=1,
                  warmup_demand=True):
         """Create a new Microexpierment. The predefined attributes are presets
@@ -728,7 +728,7 @@ class AimsunMicroExperiment(AimsunGenericExperiment):  # pylint:disable=too-few-
         self.warmup_demand = warmup_demand
         self.replications = []
 
-    def assert_experiment_well_formatted(self):  # pylint:disable=too-many-branches
+    def assert_experiment_well_formatted(self):
         """Checks whether the experiment associated with this object has the
         correct attributes initiated in order for the specified experiment to
         run.
@@ -806,7 +806,7 @@ class AimsunMicroExperiment(AimsunGenericExperiment):  # pylint:disable=too-few-
             raise ValueError('Wrong engine_mode.')
 
 
-class AimsunGenericScenario(aimsun_input_utils.AimsunObject):  # pylint:disable=too-few-public-methods
+class AimsunGenericScenario(aimsun_input_utils.AimsunObject):
     """The AimsunGenericScenario class holds the data needed to create a
     GKGenericScenario within Aimsun.
     Python object associated with the Aimsun GKGenericScenario.
@@ -844,7 +844,7 @@ class AimsunGenericScenario(aimsun_input_utils.AimsunObject):  # pylint:disable=
             aimsun_input_utils.TRAFFIC_STRATEGY_EXTERNAL_ID]
 
 
-class AimsunTrajectoryCondition:  # pylint:disable=too-few-public-methods
+class AimsunTrajectoryCondition:
     """AimsunTrajectoryCondition correspond to GKTrajectoryCondition.
 
     Attributes:
@@ -860,7 +860,7 @@ class AimsunTrajectoryCondition:  # pylint:disable=too-few-public-methods
     percentage: float
 
 
-class AimsunScenarioInputData:  # pylint:disable=too-few-public-methods
+class AimsunScenarioInputData:
     """The AimsunScenarioInputData class holds all the scenario input data,
     such as traffic demand, control plans, statistics, and public transport
     plans. This data will be imported into Aimsun later by accessing its
@@ -901,7 +901,7 @@ class AimsunScenarioInputData:  # pylint:disable=too-few-public-methods
     trajectory_condition_list: List[AimsunTrajectoryCondition]
 
 
-class AimsunScenario(AimsunGenericScenario):  # pylint:disable=too-few-public-methods,too-many-instance-attributes
+class AimsunScenario(AimsunGenericScenario):
     """The AimsunScenario class holds all the needed parameters to run a
     dynamic simulation. This simulation is defined either as an SRC (stochastic
     route choice) or a DUE (dynamic user-equilibrium). By utilizing the pickle
@@ -919,7 +919,7 @@ class AimsunScenario(AimsunGenericScenario):  # pylint:disable=too-few-public-me
         if filepath:
             self.__import_from_file(filepath)
 
-    def export_to_file(self, filepath: str):  # pylint:disable=too-many-branches, too-many-statements
+    def export_to_file(self, filepath: str):
         """Function to export AimsunScenario object using pickle.
 
         Args:
@@ -1115,7 +1115,7 @@ class AimsunScenario(AimsunGenericScenario):  # pylint:disable=too-few-public-me
                          self.traffic_strategy_external_ids,
                          self.scenario_input_data], file)
 
-    def __import_from_file(self, filepath: str):  # pylint:disable=too-many-locals, too-many-branches
+    def __import_from_file(self, filepath: str):
         """Function to import AimsunScenario object using pickle.
 
         Args:
@@ -1186,7 +1186,7 @@ class AimsunScenario(AimsunGenericScenario):  # pylint:disable=too-few-public-me
         self.scenario_input_data = imported_scenario_input_data
 
 
-class AimsunPathAssignment:  # pylint:disable=too-few-public-methods
+class AimsunPathAssignment:
     """The AimsunPathAssignment class holds a filename and file directory
     location that can be accessed by an Aimsun object.
     Python object associated with the Aimsun GKPathAssignment.
@@ -1206,7 +1206,7 @@ class AimsunPathAssignment:  # pylint:disable=too-few-public-methods
     folder_path: str
 
 
-class AimsunMacroScenarioOutputData:  # pylint:disable=too-few-public-methods
+class AimsunMacroScenarioOutputData:
     """The AimsunMacroScenarioOutputData class holds all the parameters for
     statistic collection during an experiment. Using those parameters, the
     object saves statistic data for static assignment scenarios. The output
@@ -1268,7 +1268,7 @@ class AimsunMacroScenarioOutputData:  # pylint:disable=too-few-public-methods
         self.activate_path_statistics = False
 
 
-class AimsunStaticMacroScenario(AimsunGenericScenario):  # pylint:disable=too-few-public-methods
+class AimsunStaticMacroScenario(AimsunGenericScenario):
     """The AimsunStaticMacroScenario class holds the data needed to create a
     MacroScenario object within Aimsun. It holds the output parameters of the
     scenario as well as a path to the input data.
@@ -1283,7 +1283,7 @@ class AimsunStaticMacroScenario(AimsunGenericScenario):  # pylint:disable=too-fe
     output_data: AimsunMacroScenarioOutputData
 
 
-class AimsunStaticMacroScenarios:  # pylint:disable=too-few-public-methods
+class AimsunStaticMacroScenarios:
     """Aggregate class containing a list of AimsunStaticMacroScenario objects.
 
     The AimsunStaticMacroScenarios class stores a list of

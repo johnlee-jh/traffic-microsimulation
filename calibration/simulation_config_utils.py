@@ -90,7 +90,7 @@ PARAMETERS_RANGE: Dict[str, Union[Tuple[float, float], Tuple[int, int]]] = {
 }
 
 
-def __create_experiment_config(  # pylint:disable=too-many-arguments,too-many-statements,too-many-branches,too-many-locals
+def __create_experiment_config(
     experiment_name: str = "Micro_experiment",
     experiment_external_id: aimsun_input_utils.ExternalId = "Micro_experiment",
     dynamic_simulator_engine: aimsun_config_utils.DynamicSimulatorEngine = \

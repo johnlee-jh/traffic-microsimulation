@@ -319,7 +319,7 @@ def create_new_connection(
     aimsun_model.getCommander().addCommand(cmd)
 
 
-def create_centroids(  # pylint: disable=too-many-locals
+def create_centroids(
     centroid_connections_obj: aimsun_input_utils.CentroidConfiguration,
     aimsun_model: GKModel,
     aimsun_system,
@@ -928,7 +928,7 @@ def create_control_metering(
     aimsun_model.getCommander().addCommand(None)
 
 
-def create_phase(  # pylint:disable=too-many-statements
+def create_phase(
     control_plan_node: GKControlJunction,
     junction: aimsun_input_utils.ControlJunction,
     aimsun_model: GKModel
@@ -1087,7 +1087,7 @@ def create_control_plan(
     return aimsun_control_plan
 
 
-def import_master_control_plan(  # pylint:disable=too-many-arguments
+def import_master_control_plan(
     imported_master_control_plan: aimsun_input_utils.MasterControlPlan,
     aimsun_model: GKModel,
     aimsun_system: GKSystem,
@@ -1683,7 +1683,7 @@ def generate_meterings(
     return control_meters, meterings
 
 
-def generate_master_control_plan(  # pylint:disable=too-many-locals
+def generate_master_control_plan(
     aimsun_master_control_plan: GKMasterControlPlan,
     mapping_control_junction_type: Dict[
         aimsun_input_utils.ControlJunctionType, Any],
@@ -1866,7 +1866,7 @@ def get_and_restore_real_dataset(
     return gk_real_dataset
 
 
-def create_real_data_set(  # pylint:disable=too-many-arguments
+def create_real_data_set(
     real_data_set: aimsun_input_utils.AimsunFlowRealDataSet,
     aimsun_model: GKModel,
     aimsun_system,
@@ -2109,7 +2109,7 @@ def create_macroexperiment(
     return experiment
 
 
-def create_macroscenario(  # pylint:disable=too-many-locals
+def create_macroscenario(
     macroscenario: aimsun_config_utils.AimsunStaticMacroScenario,
     aimsun_model: GKModel,
     aimsun_system,
@@ -2213,7 +2213,7 @@ def create_macroscenarios(
             create_q_date, aimsun_output_directory_path)
 
 
-def set_gk_scenario_config(  # pylint:disable=too-many-locals
+def set_gk_scenario_config(
     # scenario_input_data: aimsun_config_utils.AimsunScenarioInputData,
     gk_scenario_input_data: GKScenarioInputData,
     scenario_input_data: aimsun_config_utils.AimsunScenarioInputData,
@@ -2284,7 +2284,7 @@ def set_gk_scenario_config(  # pylint:disable=too-many-locals
     return gk_scenario_input_data
 
 
-def create_gk_experiment(  # pylint:disable=too-many-statements, too-many-branches
+def create_gk_experiment(
     experiment: aimsun_config_utils.AimsunMicroExperiment,
     aimsun_model: GKModel,
     aimsun_system
@@ -2464,7 +2464,7 @@ def create_gk_experiment(  # pylint:disable=too-many-statements, too-many-branch
     return gk_experiment
 
 
-def create_gk_scenario_and_experiment(  # pylint:disable=too-many-locals,too-many-arguments
+def create_gk_scenario_and_experiment(
     microscenario: aimsun_config_utils.AimsunScenario,
     aimsun_model: GKModel,
     aimsun_system,

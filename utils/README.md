@@ -9,7 +9,6 @@ This folder contains all utility files used to standardize filepaths and datacla
 - `aimsun_folder_utils.py`:
 - `aimsun_input_utils.py`:
 - `metadata_settings.py`:
-- `premodeling_folder_utils.py`:
 - `verification_utils.py`:
 
 TODO: Write readme.

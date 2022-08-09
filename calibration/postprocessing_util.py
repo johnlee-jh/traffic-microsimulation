@@ -253,7 +253,7 @@ class MicentDestinationColumns(enum.Enum):
     DISTANCE = "travel"
 
 
-class SQLiteTable:  # pylint: disable=too-few-public-methods
+class SQLiteTable:
     """Data class for one SQL table from Aimsun Micro/Macrosimulation output.
 
     Attributes:
@@ -315,7 +315,7 @@ class SQLiteTable:  # pylint: disable=too-few-public-methods
         return result
 
 
-class AimsunOutputDatabase:  # pylint: disable=too-few-public-methods
+class AimsunOutputDatabase:
     """Data class to store common output data between both Aimsun micro and
     macro simulation results.
 
