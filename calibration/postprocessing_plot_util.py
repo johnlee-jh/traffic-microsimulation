@@ -431,18 +431,15 @@ def process_micro_route_distance_data(
     return simulated_all_route_distance_data
 
 
-def process_delay_time_data(
+def process_network_delay_time_data(
     simulation_results_database: AimsunMicroOutputDatabase,
-    road_section_external_ids: List(ExternalId)
-) -> Dict[ExternalId, float]:
-    section_id_to_delay_time = {}
-    for road_section_ext_id in road_section_external_ids:
-        all_delay_times = simulation_results_database. \
-            get_road_section_delay_time(road_section_ext_id)
-        if len(all_delay_times) > 0:
-            processed_all_delay_time = [entry[0] for entry in all_delay_times]
-            section_id_to_delay_time[road_section_ext_id] = np.mean(
-                processed_all_delay_time)
-    return section_id_to_delay_time
+    time_intervals: List[datetime.time]
+) -> List[float]:
+    delay_times = []
+    for time in time_intervals:
+        delay_times.append(
+            simulation_results_database.get_total_delay_time(time))
+    return delay_times
+
 
 # Add more methods as needed.

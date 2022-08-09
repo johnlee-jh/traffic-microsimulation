@@ -11,7 +11,7 @@ from typing import Any, Dict
 
 sys.path.append(os.path.abspath(os.path.join('..', 'Utils')))
 
-import aimsun_input_utils  # pylint:disable=wrong-import-position,import-error
+import aimsun_input_utils
 
 
 class SimInfoColumns(enum.Enum):
@@ -95,6 +95,27 @@ class MaDetColumns(enum.Enum):
     TIME_INTERVAL = "ent"
     VOLUME = "volume"
     FLOW = "flow"
+
+
+class MiSysColumns(enum.Enum):
+    """Column names of the MISYS (Micro Systems) table. This table contains
+    statistical information of the entire network for each time interval from
+    microsimulation results. The information contained include the average
+    number of vehicles passing, average travel time, and average speed through
+    each road section at each time interval.
+
+    Attributes:
+        TIME_INTERVAL: Index of the time interval of when the data was collected
+            from. 0 corresponds to all time intervals aggregated.
+        FLOW: Number of vehicles in the entire network at a certain time
+            interval. Units are vehicles per hour.
+        DELAY_TIME: Delay time in the entire network at a certain time
+            interval. Units are in seconds.
+    """
+    VEHICLE_TYPE = "sid"
+    TIME_INTERVAL = "ent"
+    FLOW = "flow"
+    DELAY_TIME = "dtime"
 
 
 class MiSectColumns(enum.Enum):
@@ -393,6 +414,7 @@ class AimsunMicroOutputDatabase(AimsunOutputDatabase):
 
     def __init__(self, database_path: str):
         super().__init__(database_path)
+        self.system_table = SQLiteTable(self.database, "MISYS")
         self.sections_table = SQLiteTable(self.database, "MISECT")
         self.detectors_table = SQLiteTable(self.database, "MIDETEC")
         self.total_rgap_table = SQLiteTable(self.database, "RGap")
@@ -506,6 +528,20 @@ class AimsunMicroOutputDatabase(AimsunOutputDatabase):
             MiDetColumns.FLOW.value,
             {MiDetColumns.DETECTOR_EXTERNAL_ID.value: detector_external_id,
              MiDetColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
+             MiDetColumns.TIME_INTERVAL.value: str(time_interval_int)})
+
+    def get_total_delay_time(self, time_interval: datetime.time) -> float:
+        """Get total delay time across the network.
+
+        Args:
+            time_interval: Time interval of when we want the delay time from.
+        Returns:
+            delay_time: Delay time of the entire network at given time.
+        """
+        time_interval_int = self.convert_time_to_int(time_interval)
+        return self.system_table.get_data_on_condition(
+            MiSysColumns.DELAY_TIME.value,
+            {MiDetColumns.VEHICLE_TYPE.value: ALL_VEHICLE_TYPES,
              MiDetColumns.TIME_INTERVAL.value: str(time_interval_int)})
 
     def get_total_rgap(
