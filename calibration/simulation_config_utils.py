@@ -1,4 +1,4 @@
-"""TODO: docstring."""
+"""Helper functions to automatically generate simulation configuration file."""
 
 import datetime
 import os
@@ -339,7 +339,7 @@ def __create_experiment_config(
 def create_traffic_demand(
     traffic_demand_external_id: str = "traffic_demand_afternoon"
 ) -> aimsun_config_utils.AimsunTrafficDemands:
-    """TODO: docstring."""
+    """Create traffic demand file for traffic microsimulation."""
     aimsun_traffic_demands = aimsun_config_utils.AimsunTrafficDemands()
     aimsun_traffic_demand = aimsun_config_utils.AimsunTrafficDemand(
         traffic_demand_external_id)
@@ -359,9 +359,7 @@ def create_microsimulation_config(
     traffic_demand_external_id: str,
     create_simulation_config_kwargs: Dict[str, Union[float, int, bool]] = None
 ):
-    """TODO: docstring."""
-    # TODO: implement splitting hours in the code. Splitting hour should be done
-    # here. It is not done in the code yet.
+    """Create configuration file for traffic microsimulation."""
     microscenario = aimsun_config_utils.AimsunScenario()
     db_path = aimsun_folder_utils.aimsun_micro_databases_file()
     microscenario.name = f"Microscenario_{unique_name}"

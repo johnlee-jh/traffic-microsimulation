@@ -285,9 +285,15 @@ class SQLiteTable:
         """Gets data on condition.
 
         Args:
-            TODO
+            data_column_name: Name of the column that contains the data to be
+                queried in the output database SQL file.
+            condition_column_name_value: Mapping of conditions that need to be
+                satisfied to query data. Key of the dictionary is column name
+                in the output database SQL file, and value of the dictionary is
+                the value of the column that needs to be equal to.
         Returns:
-            TODO
+            Queried data from data_column_name that abides conditions in
+                condition_column_name_value.
         """
         if condition_column_name_value is None:
             self.__cursor.execute(
@@ -305,24 +311,6 @@ class SQLiteTable:
         assert len(result) == 1  # only one row for the condition.
         assert len(result[0]) == 1  # only one data returned.
         return result[0][0]
-
-    def get_number_of_entries(self) -> int:
-        """Return the number of entries in the SQL table."""
-        self.__cursor.execute(f"SELECT COUNT(*) FROM {self.table_name}")
-        result = self.__cursor.fetchall()
-        assert len(result) == 1  # only one row for the condition.
-        assert len(result[0]) == 1  # only one data returned.
-        return result[0][0]
-
-    def get_internal_external_ids(
-        self, int_id_column_name: str, ext_id_column_name: str
-    ) -> list(aimsun_input_utils.ExternalId, aimsun_input_utils.InternalId):
-        self.__cursor.execute(
-            f"SELECT {int_id_column_name}, {ext_id_column_name}"
-            + f" FROM {self.table_name}")
-        result = self.__cursor.fetchall()
-        assert len(result) > 0 and len(result[0]) == 2
-        return result
 
 
 class AimsunOutputDatabase:

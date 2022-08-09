@@ -1422,7 +1422,7 @@ class NonActuatedControlPhase(ControlPhase):
 
 class ActuatedControlPhase(ControlPhase):
     """Child class that contains attributes specific to an actuated Aimsun
-    GKControlPhase object. Used for NE3 and N5 Aimsun scripts.
+    GKControlPhase object.
 
     Attributes:
         id_ring: ID of the control phase ring.
