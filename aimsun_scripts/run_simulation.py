@@ -11,19 +11,19 @@ from aimsun_folder_utils import (
 )
 
 
-RUN_MACRO_BASELINE = False
-RUN_MICRO_BASELINE = False
+MACRO_BASELINE = False
+MICRO_BASELINE = False
 
 LIST_EXPERIMENT_EXTERNAL_ID: List[aimsun_input_utils.ExternalId] = []
 
-if RUN_MACRO_BASELINE:
+if MACRO_BASELINE:
     LIST_EXPERIMENT_EXTERNAL_ID = [
         scenario.experiment.external_id for scenario
         in aimsun_config_utils.AimsunStaticMacroScenarios(
             aimsun_macro_simulation_config_input_file(
             )).aimsun_static_macroscenarios
     ]
-elif RUN_MICRO_BASELINE:
+elif MICRO_BASELINE:
     LIST_EXPERIMENT_EXTERNAL_ID = [
         aimsun_config_utils.AimsunScenario(
             aimsun_micro_simulation_config_input_file(

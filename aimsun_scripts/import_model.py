@@ -15,18 +15,6 @@ AIMSUN_SYSTEM = GKSystem.getSystem()
 GKModel = NewType('GKModel', Any)
 
 
-MAPPING_CONTROL_METERING_TYPE = {
-    aimsun_input_utils.ControlMeteringType.UNSPECIFIED:
-        GKControlMetering.eUnspecified,
-    aimsun_input_utils.ControlMeteringType.UNCONTROLLED:
-        GKControlMetering.eUncontrolled,
-    aimsun_input_utils.ControlMeteringType.FIXED_CONTROL:
-        GKControlMetering.eFixedControl,
-    aimsun_input_utils.ControlMeteringType.EXTERNAL:
-        GKControlMetering.eExternal
-}
-
-
 GK_OBJECT_STATUS_MODIFIED = GKObject.eModified
 
 
