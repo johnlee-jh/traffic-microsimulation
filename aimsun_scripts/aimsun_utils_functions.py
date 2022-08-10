@@ -2047,7 +2047,7 @@ def create_traffic_demand(
     create_schedule_demand_item,
     create_gk_time_duration
 ):
-    """TODO: add docstring."""
+    """Create traffic demand object in Aimsun."""
     for traffic_demand in traffic_demand_list.traffic_demands:
         # Create the traffic demand.
         gk_traffic_demand = aimsun_system.newObject(
@@ -2129,8 +2129,10 @@ def create_macroscenario(
             variable definitions and locations within the code.
         aimsun_system: The Aimsun object denoting the entire system. New object
             will be created using an object type and Aimsun model.
-        create_q_date: TODO.
-        aimsun_output_directory_path: TODO.
+        create_q_date: Function that creates a QDate object that corrseponds to
+            a specific year, month, and date.
+        aimsun_output_directory_path: File path to the Aimsun simulation output
+            database.
     """
     master_control_plan = get_object_per_external_id(
         macroscenario.master_control_plan_external_id, ["GKMasterControlPlan"],
@@ -2198,13 +2200,15 @@ def create_macroscenarios(
     function create_secnario().
 
     Args:
-        macroscenarios: TODO.
+        macroscenarios: Macrosimulation object to create in Aimsun.
         aimsun_model: The model variable within Aimsun, used to simplify
             variable definitions and locations within the code.
         aimsun_system: The Aimsun object denoting the entire system. New object
             will be created using an object type and Aimsun model.
-        create_q_date: TODO.
-        aimsun_output_directory_path: TODO.
+        create_q_date: Function that creates a QDate object that corrseponds to
+            a specific year, month, and date.
+        aimsun_output_directory_path: File path to the Aimsun simulation output
+            database.
     """
     for aimsun_static_macroscenario in (
             macroscenarios.aimsun_static_macroscenarios):
@@ -2234,7 +2238,8 @@ def set_gk_scenario_config(
             modified to fit the scenario needed.
         scenario_input_data: The Python object that stores all the scenario
             input data needed to set the configs for the Aimsun scenario.
-        create_trajectory_condition: TODO.
+        create_trajectory_condition: Function that returns an empty Aimsun
+            GKTrajectoryCondition object.
     Returns:
         gk_scenario_input_data: The modified GKScenarioInputData object that
             was passed into this function.
@@ -2486,9 +2491,12 @@ def create_gk_scenario_and_experiment(
             will be created using an object type and Aimsun model.
         microscenario: A Python AimsunScenario object that houses the data
             needed to create a GKScenario within Aimsun for a microsimulation.
-        create_q_date: TODO.
-        create_trajectory_condition: TODO.
-        aimsun_output_directory_path: TODO.
+        create_q_date: Function that creates a QDate object that corrseponds to
+            a specific year, month, and date.
+        create_trajectory_condition: Function that returns an empty Aimsun
+            GKTrajectoryCondition object.
+        aimsun_output_directory_path: File path to the Aimsun simulation output
+            database.
     """
     master_control_plan = get_object_per_external_id(
         microscenario.master_control_plan_external_id, ["GKMasterControlPlan"],

@@ -1424,25 +1424,39 @@ class ActuatedControlPhase(ControlPhase):
     """Child class that contains attributes specific to an actuated Aimsun
     GKControlPhase object.
 
+    See detailed information at
+    https://docs.aimsun.com/next/22.0.1/UsersManual/ControlPlanEditing.html#actuated-parameters
+
     Attributes:
         id_ring: ID of the control phase ring.
         interphase: Boolean indicating whether interphase time exists in control
             phase.
-        recall: TODO
+        recall: Activates the specified phase.
         is_default: Boolean indicating whether the control phase is default.
         min_duration: Minimum duration of the control phase.
         max_duration: Maximum duration of the control phase.
-        passage_time: TODO
+        passage_time: Maximum allowed time difference between detector
+            actuations.
         permissive_period_from: Starting time of the permissive period.
         permissive_period_to: End time of the permissive period.
-        force_off: TODO
-        hold: TODO
-        maximum_initial: TODO
-        seconds_actuation: TODO
-        gap_reduction: TODO
-        minimum_gap: TODO
-        time_before_reduce: TODO
-        time_to_reduce: TODO
+        force_off: For each phase there is a point in the cycle, called
+            force-off, at which the phase must terminate at the most, in order
+            to maintain a fixed cycle (the force-off of the coordinated phase is
+            0 by default).
+        hold: If a phase has this feature activated, the current green interval
+            is retained until it yields to a conflicting call. It is the
+            opposite command to Rest in Red.
+        maximum_initial: The maximum value up to which the initial time can be
+            extended.
+        seconds_actuation: The number of seconds the Minimum Green is extended
+            for each actuation taking place when an Extensible Initial method
+            is used and while that phase is not active.
+        gap_reduction: Gap reduction is a process that reduces the allowable gap
+            from the Passage Time down to the Minimum Gap.
+        minimum_gap: The value to which the allowable gap will be reduced when
+            using a Gap Reduction feature.
+        time_before_reduce: Time point that signals start of Gap Reduction.
+        time_to_reduce: Time point that signals end of Gap Reduction.
         detectors: List of detectors in the area of study.
     """
     id_ring: int
